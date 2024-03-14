@@ -7,5 +7,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
-  resources :forecasts, only: %i[ show ], param: :zip_code
+  resources :forecasts, only: %i[ show ], param: :zip_code, constraints: { zip_code: /\d{5}/ }
 end
