@@ -16,7 +16,7 @@ RSpec.describe "Forecast searches", type: :system do
     find("input[placeholder=\"Search City or Zip Code\"]")
   end
 
-  scenario "the user provides a zip code" do
+  before(:each) do
     # Stub out the Geocodio API web request
     stub_geocodio_request_for_02134
 
@@ -25,7 +25,9 @@ RSpec.describe "Forecast searches", type: :system do
     stub_nws_gridbox_stations_request_for_BOX_64_90
     stub_nws_station_observations_request_for_KBOS
     stub_nws_gridpoints_forecast_request_for_BOX_64_90
+  end
 
+  scenario "the user provides a zip code" do
     # Given I'm on the home page
     visit root_path
     input_field.fill_in(with: "02134")
