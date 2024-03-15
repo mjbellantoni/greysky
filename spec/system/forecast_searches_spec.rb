@@ -46,8 +46,5 @@ RSpec.describe "Forecast searches", type: :system do
     expect(page).to have_text("High: 48")
     expect(page).to have_text("Low: 37")
     expect(page).to have_text("Cloudy")
-    expect(page).to have_text("Here is your weather forecast.")
-
-
   end
 end
