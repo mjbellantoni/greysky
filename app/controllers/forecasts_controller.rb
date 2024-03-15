@@ -58,6 +58,9 @@ class ForecastsController < ApplicationController
 
     # We'll print out the data basically as delivered from the API.
     forecast_periods = forecast_response_body["properties"]["periods"]
+    @forecast_periods = forecast_periods.map do |period|
+      ForecastPeriod.from_nws_api_json(period)
+    end
 
     # It's a little ambiguous what "high" and "low" mean in the
     # forecast. I'm going to assume it's the high and low for the next

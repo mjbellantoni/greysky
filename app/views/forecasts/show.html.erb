@@ -5,4 +5,8 @@
   <li>Low: <%= @low_temp %>&deg;</li>
   <li><%= @current_weather %></li>
 </ul>
-
+<table id="forecast_periods">
+  <tbody>
+    <%= render @forecast_periods %>
+  </tbody>
+</table>

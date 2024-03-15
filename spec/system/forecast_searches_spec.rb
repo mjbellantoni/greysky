@@ -39,6 +39,7 @@ RSpec.describe "Forecast searches", type: :system do
     # Then I am taken to the forecast page
     #   And I see the name of the city
     #   And I am shown the current weather forecast for that ZIP code
+    #   And I am shown the 7 day forecast for that ZIP code
     expect(page).to have_current_path(forecast_path("02134"))
 
     expect(page).to have_text("Allston")
@@ -46,5 +47,7 @@ RSpec.describe "Forecast searches", type: :system do
     expect(page).to have_text("High: 48")
     expect(page).to have_text("Low: 37")
     expect(page).to have_text("Cloudy")
+
+    expect(page).to have_css("table#forecast_periods tr", count: 14)
   end
 end
