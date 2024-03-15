@@ -82,4 +82,8 @@ class Forecast
 
     self.fetched_at = Time.current
   end
+
+  def newly_fetched?
+    fetched_at > 1.minute.ago
+  end
 end
