@@ -5,6 +5,7 @@ class Forecast
   attribute :city, :string
   attribute :current_temp, :integer
   attribute :current_weather, :string
+  attribute :fetched_at, :datetime
   attribute :forecast_periods
   attribute :high_temp, :integer
   attribute :low_temp, :integer
@@ -78,5 +79,7 @@ class Forecast
     forecast_and_current_temps = forecast_periods.take(2).pluck("temperature") + [current_temp_in_f]
     self.high_temp = forecast_and_current_temps.max
     self.low_temp = forecast_and_current_temps.min
+
+    self.fetched_at = Time.current
   end
 end
