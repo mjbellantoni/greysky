@@ -1,12 +1,12 @@
-<h1><%= @city %></h1>
+<h1><%= @forecast.city %></h1>
 <ul>
-  <li>Current: <%= @current_temp %>&deg;</li>
-  <li>High: <%= @high_temp %>&deg;</li>
-  <li>Low: <%= @low_temp %>&deg;</li>
-  <li><%= @current_weather %></li>
+  <li>Current: <%= @forecast.current_temp %>&deg;</li>
+  <li>High: <%= @forecast.high_temp %>&deg;</li>
+  <li>Low: <%= @forecast.low_temp %>&deg;</li>
+  <li><%= @forecast.current_weather %></li>
 </ul>
 <table id="forecast_periods">
   <tbody>
-    <%= render @forecast_periods %>
+    <%= render @forecast.forecast_periods %>
   </tbody>
 </table>

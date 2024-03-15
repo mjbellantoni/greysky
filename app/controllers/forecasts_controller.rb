@@ -6,13 +6,13 @@ class ForecastsController < ApplicationController
     lat, lon = results.lat, results.lng
     @city = results.city
 
-    forecast = Forecast.new(zip_code: params[:zip_code], city: @city)
-    forecast.fetch_from_nws(lat, lon)
+    @forecast = Forecast.new(zip_code: params[:zip_code], city: @city)
+    @forecast.fetch_from_nws(lat, lon)
 
-    @current_temp = forecast.current_temp
-    @current_weather = forecast.current_weather
-    @forecast_periods = forecast.forecast_periods
-    @high_temp = forecast.high_temp
-    @low_temp = forecast.low_temp
+    @current_temp = @forecast.current_temp
+    @current_weather = @forecast.current_weather
+    @forecast_periods = @forecast.forecast_periods
+    @high_temp = @forecast.high_temp
+    @low_temp = @forecast.low_temp
   end
 end
