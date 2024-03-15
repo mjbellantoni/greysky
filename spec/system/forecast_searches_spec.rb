@@ -1,7 +1,10 @@
 require "rails_helper"
+require "support/mocks/geocodio_stubs"
 
 
 RSpec.describe "Forecast searches", type: :system do
+
+  include GeocodioStubs
 
   before do
     driven_by(:rack_test)
@@ -16,9 +19,7 @@ RSpec.describe "Forecast searches", type: :system do
     WebMock.disable_net_connect!(allow: "https://api.weather.gov")
 
     # Stub out the Geocodio API web request
-    stub_request(:get, "http://api.geocod.io/v1/geocode")
-      .with(query: hash_including({"q" => "02134"}))
-      .to_return(body: File.read("spec/support/mocks/geocodio_response_02134.json"))
+    stub_geocodio_request_for_02134
 
     # Given I'm on the home page
     visit root_path
