@@ -33,6 +33,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Enable the cache in the development environment.
+  config.cache_store = :memory_store
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
