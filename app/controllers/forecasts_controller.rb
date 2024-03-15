@@ -5,16 +5,10 @@ class ForecastsController < ApplicationController
     results = Geokit::Geocoders::GeocodioGeocoder.geocode("02134")
     lat, lon = results.lat, results.lng
 
-    puts "lon: #{lon}"
-    puts "lat: #{lat}"
-
     # The NWS API requires the lat/lon only has four decimal places. So,
     # we round them here.
     lat = lat.round(4)
     lon = lon.round(4)
-
-    puts "lon: #{lon}"
-    puts "lat: #{lat}"
 
     # Use the NWS API to look up the forecast for the lat/lon pair. This
     # first call doesn't contain the forecast, but it does contain URLs
@@ -26,7 +20,6 @@ class ForecastsController < ApplicationController
     # weather station. This is a two step process. First, we get the
     # URL for the observation stations near the lat/lon pair.
     observation_stations_url = points_response_body["properties"]["observationStations"]
-    puts "observation_stations_url: #{observation_stations_url}"
 
     observation_stations_response = Faraday.get(observation_stations_url)
     observation_stations_response_body = JSON.parse(observation_stations_response.body)
@@ -40,7 +33,6 @@ class ForecastsController < ApplicationController
     # everywhere else.
     station_id = observation_stations_response_body["features"][0]["properties"]["stationIdentifier"]
     station_latest_observations_url = "https://api.weather.gov/stations/#{station_id}/observations/latest"
-    puts "station_latest_observations_url: #{station_latest_observations_url}"
 
     # Get the latest observations from the weather station.
     station_latest_observations_response = Faraday.get(station_latest_observations_url)
@@ -50,16 +42,13 @@ class ForecastsController < ApplicationController
     # convert it to Fahrenheit.
     current_temp_in_c = station_latest_observations_response_body["properties"]["temperature"]["value"]
     current_temp_in_f = (current_temp_in_c * 9 / 5) + 32
-    puts "current_temp_in_f: #{current_temp_in_f.round}"
 
     # There's also a nice text description of the current weather conditions.
     current_weather = station_latest_observations_response_body["properties"]["textDescription"]
-    puts "current_weather: #{current_weather}"
 
     # I was told there's bonus points for getting the seven day
     # forecast, so we'll get that here.
     forecast_url = points_response_body["properties"]["forecast"]
-    puts "forecast_url: #{forecast_url}"
 
     # Get the forecast for the next 7 days.
     forecast_response = Faraday.get(forecast_url)
@@ -67,9 +56,6 @@ class ForecastsController < ApplicationController
 
     # We'll print out the data basically as delivered from the API.
     forecast_periods = forecast_response_body["properties"]["periods"]
-    forecast_periods.each do |period|
-      puts "#{period["name"]}: #{period["temperature"]} -- #{period["probabilityOfPrecipitation"]["value"] || 0}% -- #{period["shortForecast"]}"
-    end
 
     # It's a little ambiguous what "high" and "low" mean in the
     # forecast. I'm going to assume it's the high and low for the next
@@ -77,7 +63,5 @@ class ForecastsController < ApplicationController
     forecast_and_current_temps = forecast_periods.take(2).pluck("temperature") + [current_temp_in_f]
     high_temp = forecast_and_current_temps.max
     low_temp = forecast_and_current_temps.min
-    puts "high_temp: #{high_temp.round}"
-    puts "low_temp: #{low_temp.round}"
   end
 end
