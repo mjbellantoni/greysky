@@ -38,9 +38,16 @@ RSpec.describe "Forecast searches", type: :system do
 
     # Then I am taken to the forecast page
     #   And I see the name of the city
-    #   And I am shown the weather forecast for that ZIP code
+    #   And I am shown the current weather forecast for that ZIP code
     expect(page).to have_current_path(forecast_path("02134"))
+
     expect(page).to have_text("Allston")
+    expect(page).to have_text("Current: 42")
+    expect(page).to have_text("High: 48")
+    expect(page).to have_text("Low: 37")
+    expect(page).to have_text("Cloudy")
     expect(page).to have_text("Here is your weather forecast.")
+
+
   end
 end

@@ -43,9 +43,10 @@ class ForecastsController < ApplicationController
     # convert it to Fahrenheit.
     current_temp_in_c = station_latest_observations_response_body["properties"]["temperature"]["value"]
     current_temp_in_f = (current_temp_in_c * 9 / 5) + 32
+    @current_temp = current_temp_in_f.round
 
     # There's also a nice text description of the current weather conditions.
-    current_weather = station_latest_observations_response_body["properties"]["textDescription"]
+    @current_weather = station_latest_observations_response_body["properties"]["textDescription"]
 
     # I was told there's bonus points for getting the seven day
     # forecast, so we'll get that here.
@@ -62,7 +63,7 @@ class ForecastsController < ApplicationController
     # forecast. I'm going to assume it's the high and low for the next
     # two forecast periods adjusted with the current temperature.
     forecast_and_current_temps = forecast_periods.take(2).pluck("temperature") + [current_temp_in_f]
-    high_temp = forecast_and_current_temps.max
-    low_temp = forecast_and_current_temps.min
+    @high_temp = forecast_and_current_temps.max
+    @low_temp = forecast_and_current_temps.min
   end
 end
