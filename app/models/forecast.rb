@@ -11,6 +11,11 @@ class Forecast
   attribute :zip_code, :string
 
   def fetch_from_nws(lat, lon)
+
+    # Make sure we're calling this on a properly initialized object.
+    raise ArgumentError, "`city` is required" if city.blank?
+    raise ArgumentError, "`zip_code` is required" if zip_code.blank?
+
     # The NWS API requires the lat/lon only has four decimal places. So,
     # we round them here.
     lat = lat.round(4)
