@@ -1,7 +1,5 @@
 namespace :forecast do
 
-  Geokit::Geocoders::GeocodioGeocoder.key = ENV["GEOCODIO_API_KEY"]
-
   desc "Look up the forecast for a given zipcode"
   task zipcode: :environment do |args|
     # Use Geokit to geocode the zipcode via the Geocodio API. The NWS
