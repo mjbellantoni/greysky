@@ -12,6 +12,14 @@ RSpec.describe "Forecast searches", type: :system do
   end
 
   scenario "the user provides a zip code" do
+    # Don't stub out the NWS API for now
+    WebMock.disable_net_connect!(allow: "https://api.weather.gov")
+
+    # Stub out the Geocodio API web request
+    stub_request(:get, "http://api.geocod.io/v1/geocode")
+      .with(query: hash_including({"q" => "02134"}))
+      .to_return(body: File.read("spec/support/mocks/geocodio_response_02134.json"))
+
     # Given I'm on the home page
     visit root_path
     input_field.fill_in(with: "02134")
