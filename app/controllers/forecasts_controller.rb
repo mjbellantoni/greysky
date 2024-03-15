@@ -4,6 +4,7 @@ class ForecastsController < ApplicationController
     # API needs a lat/lon pair to look up the forecast.
     results = Geokit::Geocoders::GeocodioGeocoder.geocode("02134")
     lat, lon = results.lat, results.lng
+    @city = results.city
 
     # The NWS API requires the lat/lon only has four decimal places. So,
     # we round them here.

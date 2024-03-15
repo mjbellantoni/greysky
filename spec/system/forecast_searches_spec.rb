@@ -21,8 +21,10 @@ RSpec.describe "Forecast searches", type: :system do
     click_on("Lookup")
 
     # Then I am taken to the forecast page
+    #   And I see the name of the city
     #   And I am shown the weather forecast for that ZIP code
     expect(page).to have_current_path(forecast_path("02134"))
+    expect(page).to have_text("Allston")
     expect(page).to have_text("Here is your weather forecast.")
   end
 end
