@@ -12,14 +12,14 @@ RSpec.describe Forecast, type: :model do
     end
   end
 
-  describe "cache_key" do
+  describe "#cache_key" do
     it "returns a cache key based on the zip code" do
       forecast = Forecast.new(zip_code: "02134")
       expect(forecast.cache_key).to eq("forecast-02134")
     end
   end
 
-  describe "fetch_from_nws" do
+  describe "#fetch_from_nws" do
     before(:each) do
       stub_nws_points_request_for_02134
       stub_nws_gridbox_stations_request_for_BOX_64_90
@@ -42,7 +42,7 @@ RSpec.describe Forecast, type: :model do
     end
   end
 
-  describe "newly_fetched?" do
+  describe "#newly_fetched?" do
     it "returns true if the forecast was fetched less than 1 minute ago" do
       freeze_time do
         forecast = Forecast.new(fetched_at: 59.seconds.ago)
