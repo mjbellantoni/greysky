@@ -1,8 +1,8 @@
 <section class="text-center my-5">
   <h1 class="mb-0"><%= @forecast.city %></h1>
   <h1 id="current_temp", class="display-1 fw-lighter mt-0"><%= @forecast.current_temp %>&deg;</h1>
-  <p class="lead mb-0"><%= @forecast.current_weather %></p>
-  <p class="lead">H:<%= @forecast.high_temp %>&deg; L:<%= @forecast.low_temp %>&deg;</p>
+  <p class="lead mb-0"><%= format_nil_as_dashes(@forecast.current_weather) %></p>
+  <p class="lead">H:<%= format_nil_as_dashes(@forecast.high_temp) %>&deg; L:<%= format_nil_as_dashes(@forecast.low_temp) %>&deg;</p>
 </section>
 <section class="my-4">
   <% unless @forecast.newly_fetched? %>
