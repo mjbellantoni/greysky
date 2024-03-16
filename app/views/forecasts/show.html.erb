@@ -8,8 +8,17 @@
 <% unless @forecast.newly_fetched? %>
   <p><i>Forecast data is <%= time_ago_in_words(@forecast.fetched_at) %> old.</i></p>
 <% end %>
-<table id="forecast_periods">
-  <tbody>
+<section class="my-5">
+  <h5>7-day Forecast</h5>
+  <table id="forecast_periods" class="table table-borderless my-4">
+    <thead>
+      <th></th>
+      <th class="text-end">🌡️</th>
+      <th class="text-end">🌧️</th>
+      <th class="d-none d-md-block"></th>
+    </thead>
+    <tbody>
     <%= render @forecast.forecast_periods %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</section>

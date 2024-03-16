@@ -1,6 +1,6 @@
 <tr class="forecast_period">
   <th><%= forecast_period.name %></th>
-  <td><%= forecast_period.temperature %>&deg;</td>
-  <td><%= forecast_period.precipitation_probability %>%</td>
-  <td><%= forecast_period.short_forecast.capitalize %></td>
+  <td class="text-end"><%= forecast_period.temperature %>&deg;</td>
+  <td class="text-end"><%= forecast_period.precipitation_probability %>%</td>
+  <td class="d-none d-md-block"><%= forecast_period.short_forecast.capitalize %></td>
 </tr>
