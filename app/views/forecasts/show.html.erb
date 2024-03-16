@@ -5,10 +5,14 @@
   <li>Low: <%= @forecast.low_temp %>&deg;</li>
   <li><%= @forecast.current_weather %></li>
 </ul>
-<% unless @forecast.newly_fetched? %>
-  <p><i>Forecast data is <%= time_ago_in_words(@forecast.fetched_at) %> old.</i></p>
-<% end %>
-<section class="my-5">
+<section class="my-4">
+  <% unless @forecast.newly_fetched? %>
+    <div class="alert alert-light text-center" role="alert">
+      <i>Forecast data was updated <%= time_ago_in_words(@forecast.fetched_at) %> ago.</i>
+    </div>
+  <% end %>
+</section>
+<section class="my-4">
   <h5>7-day Forecast</h5>
   <table id="forecast_periods" class="table table-borderless my-4">
     <thead>
