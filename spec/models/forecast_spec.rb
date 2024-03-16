@@ -1,14 +1,98 @@
 require "rails_helper"
+require "support/mocks/geocodio_stubs"
 require "support/mocks/nws_stubs"
 
 RSpec.describe Forecast, type: :model do
 
-  include NwsStubs
   include ActiveSupport::Testing::TimeHelpers
+  include GeocodioStubs
+  include NwsStubs
 
   describe ".cache_key" do
     it "returns a cache key based on the zip code" do
       expect(Forecast.cache_key("02134")).to eq("forecast-02134")
+    end
+  end
+
+  describe ".fetch" do
+    # The cache is disabled in the test environment by default. We need
+    # to enable it for these tests.
+    around(:each) do |example|
+      original_cache_store = Rails.cache
+      Rails.application.config.cache_store = :memory_store
+      Rails.cache = ActiveSupport::Cache.lookup_store(Rails.application.config.cache_store)
+
+      example.run
+
+      Rails.cache.clear
+      Rails.cache = original_cache_store
+    end
+
+
+    context "when the Forecast is not in the cache" do
+      before(:each) do
+        stub_geocodio_request_for_02134
+        stub_nws_points_request_for_02134
+        stub_nws_gridbox_stations_request_for_BOX_64_90
+        stub_nws_station_observations_request_for_KBOS
+        stub_nws_gridpoints_forecast_request_for_BOX_64_90
+      end
+
+      it "calls the Forecast.fetch_from_nws method" do
+        expect(Forecast).to receive(:fetch_from_nws).with("02134", 42.35843, -71.12589, "Allston").and_call_original
+        Forecast.fetch("02134", 42.35843, -71.12589, "Allston")
+      end
+    end
+
+    context "when the Forecast is in the cache" do
+      let(:forecast) { Forecast.new(
+        city: "Allston",
+        current_temp: 72,
+        current_weather: "Sunny",
+        fetched_at: Time.current,
+        forecast_periods: [],
+        high_temp: 80,
+        low_temp: 60,
+        zip_code: "02134"
+      ) }
+
+      before(:each) do
+        stub_geocodio_request_for_02134
+        Rails.cache.write(forecast.cache_key, forecast)
+      end
+
+      it "doesn't call the Forecast.fetch_from_nws method" do
+        expect(Forecast).to_not receive(:fetch_from_nws)
+        Forecast.fetch("02134", 42.35843, -71.12589, "Allston")
+      end
+    end
+
+    context "when the Forecast is in the cache but it's expired" do
+      let(:forecast) { Forecast.new(
+        city: "Allston",
+        current_temp: 72,
+        current_weather: "Sunny",
+        fetched_at: 31.minutes.ago,
+        forecast_periods: [],
+        high_temp: 80,
+        low_temp: 60,
+        zip_code: "02134"
+      ) }
+
+      before(:each) do
+        stub_geocodio_request_for_02134
+        stub_nws_points_request_for_02134
+        stub_nws_gridbox_stations_request_for_BOX_64_90
+        stub_nws_station_observations_request_for_KBOS
+        stub_nws_gridpoints_forecast_request_for_BOX_64_90
+
+        travel_to 31.minutes.ago { Rails.cache.write(forecast.cache_key, forecast) }
+      end
+
+      it "calls the Forecast.fetch_from_nws method" do
+        expect(Forecast).to receive(:fetch_from_nws).with("02134", 42.35843, -71.12589, "Allston").and_call_original
+        Forecast.fetch("02134", 42.35843, -71.12589, "Allston")
+      end
     end
   end
 
