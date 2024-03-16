@@ -6,10 +6,6 @@ class ForecastsController < ApplicationController
     lat, lon = results.lat, results.lng
     city = results.city
 
-    @forecast = Rails.cache.fetch(params[:zip_code], expires_in: 30.minutes) do
-      forecast = Forecast.new(zip_code: params[:zip_code], city: city)
-      forecast.fetch_from_nws(lat, lon)
-      forecast
-    end
+    @forecast = Forecast.fetch(params[:zip_code], lat, lon, city)
   end
 end
