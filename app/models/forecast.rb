@@ -20,10 +20,14 @@ class Forecast
 
   def self.fetch(zip_code, lat, lon, city)
     Rails.cache.fetch(cache_key(zip_code), expires_in: CACHE_EXPIRATION) do
-      forecast = Forecast.new(zip_code: zip_code, city: city)
-      forecast.fetch_from_nws(lat, lon)
-      forecast
+      fetch_from_nws(zip_code, lat, lon, city)
     end
+  end
+
+  def self.fetch_from_nws(zip_code, lat, lon, city)
+    forecast = new(zip_code: zip_code, city: city)
+    forecast.fetch_from_nws(lat, lon)
+    forecast
   end
 
   def cache_key
