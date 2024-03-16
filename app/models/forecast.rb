@@ -11,12 +11,20 @@ class Forecast
   attribute :low_temp, :integer
   attribute :zip_code, :string
 
+  def self.cache_key(zip_code)
+    "forecast-#{zip_code}"
+  end
+
   def self.fetch(zip_code, lat, lon, city)
-    Rails.cache.fetch(zip_code, expires_in: 30.minutes) do
+    Rails.cache.fetch(cache_key(zip_code), expires_in: 30.minutes) do
       forecast = Forecast.new(zip_code: zip_code, city: city)
       forecast.fetch_from_nws(lat, lon)
       forecast
     end
+  end
+
+  def cache_key
+    "forecast-#{zip_code}"
   end
 
   def fetch_from_nws(lat, lon)

@@ -6,6 +6,19 @@ RSpec.describe Forecast, type: :model do
   include NwsStubs
   include ActiveSupport::Testing::TimeHelpers
 
+  describe ".cache_key" do
+    it "returns a cache key based on the zip code" do
+      expect(Forecast.cache_key("02134")).to eq("forecast-02134")
+    end
+  end
+
+  describe "cache_key" do
+    it "returns a cache key based on the zip code" do
+      forecast = Forecast.new(zip_code: "02134")
+      expect(forecast.cache_key).to eq("forecast-02134")
+    end
+  end
+
   describe "fetch_from_nws" do
     before(:each) do
       stub_nws_points_request_for_02134
