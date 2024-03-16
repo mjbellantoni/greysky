@@ -25,9 +25,7 @@ class Forecast
   end
 
   def self.fetch_from_nws(zip_code, lat, lon, city)
-    forecast = new(zip_code: zip_code, city: city)
-    forecast.fetch_from_nws(lat, lon)
-    forecast
+    new(zip_code: zip_code, city: city).fetch_from_nws(lat, lon)
   end
 
   def cache_key
@@ -104,6 +102,8 @@ class Forecast
     self.low_temp = forecast_and_current_temps.min
 
     self.fetched_at = Time.current
+
+    self
   end
 
   def newly_fetched?
