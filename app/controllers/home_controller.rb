@@ -5,7 +5,7 @@ class HomeController < ApplicationController
       results = Geokit::Geocoders::GeocodioGeocoder.geocode(params[:q])
       redirect_to forecast_path(results.zip)
     else
-      flash[:alert] = "Please enter a valid ZIP code"
+      flash[:alert] = "Please enter a valid ZIP code or city and state."
       render :index
     end
   end
