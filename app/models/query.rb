@@ -14,6 +14,10 @@ class Query
     q.present?
   end
 
+  def zip_code
+    q&.squish
+  end
+
   private
 
   def city_and_state?

@@ -1,4 +1,7 @@
 class Geocoder
+
+  CACHE_EXPIRATION = 24.hours
+
   class Result
     attr_reader :lat
     attr_reader :lng
@@ -17,7 +20,17 @@ class Geocoder
     end
   end
 
+  def self.cache_key(zip_code)
+    "geocoder-#{zip_code}"
+  end
+
   def self.geocode(query)
+    Rails.cache.fetch(cache_key(query.zip_code), expires_in: CACHE_EXPIRATION) do
+      geocode_with_geokit(query)
+    end
+  end
+
+  def self.geocode_with_geokit(query)
     results = Geokit::Geocoders::GeocodioGeocoder.geocode(query.q)
     Geocoder::Result.from_geokit_results(results)
   end
