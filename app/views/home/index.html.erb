@@ -3,7 +3,8 @@
     <span>The query <%= @query.errors.full_messages_for(:base).to_sentence %>.</span>
   </div>
 <% end %>
-  <%= form_tag("/", method: :get) do %>
-  <%= text_field_tag(:q, params[:q], placeholder: "Search City or Zip Code") %>
-  <%= submit_tag("Lookup") %>
+
+<%= form_tag("/", method: :get, class: %w[ d-flex ]) do %>
+  <%= text_field_tag(:q, params[:q], class: %w[ form-control me-2 ], placeholder: "Search City or Zip Code") %>
+  <%= submit_tag("Lookup", class: %w[ btn btn-outline-secondary ]) %>
 <% end %>
