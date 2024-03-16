@@ -43,9 +43,9 @@ RSpec.describe "Forecast searches", type: :system do
     expect(page).to have_current_path(forecast_path("02134"))
 
     expect(page).to have_text("Allston")
-    expect(page).to have_text("Current: 42")
-    expect(page).to have_text("High: 48")
-    expect(page).to have_text("Low: 37")
+    expect(page).to have_css("#current_temp", text: "42")
+    expect(page).to have_text("H:48")
+    expect(page).to have_text("L:37")
     expect(page).to have_text("Cloudy")
 
     expect(page).to have_css("table#forecast_periods tr", count: 14)

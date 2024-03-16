@@ -1,10 +1,9 @@
-<h1><%= @forecast.city %></h1>
-<ul>
-  <li>Current: <%= @forecast.current_temp %>&deg;</li>
-  <li>High: <%= @forecast.high_temp %>&deg;</li>
-  <li>Low: <%= @forecast.low_temp %>&deg;</li>
-  <li><%= @forecast.current_weather %></li>
-</ul>
+<section class="text-center my-5">
+  <h1 class="mb-0"><%= @forecast.city %></h1>
+  <h1 id="current_temp", class="display-1 fw-lighter mt-0"><%= @forecast.current_temp %>&deg;</h1>
+  <p class="lead mb-0"><%= @forecast.current_weather %></p>
+  <p class="lead">H:<%= @forecast.high_temp %>&deg; L:<%= @forecast.low_temp %>&deg;</p>
+</section>
 <section class="my-4">
   <% unless @forecast.newly_fetched? %>
     <div class="alert alert-light text-center" role="alert">
