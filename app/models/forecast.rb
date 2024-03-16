@@ -1,4 +1,7 @@
 class Forecast
+
+  CACHE_EXPIRATION = 30.minutes
+
   include ActiveModel::API
   include ActiveModel::Attributes
 
@@ -16,7 +19,7 @@ class Forecast
   end
 
   def self.fetch(zip_code, lat, lon, city)
-    Rails.cache.fetch(cache_key(zip_code), expires_in: 30.minutes) do
+    Rails.cache.fetch(cache_key(zip_code), expires_in: CACHE_EXPIRATION) do
       forecast = Forecast.new(zip_code: zip_code, city: city)
       forecast.fetch_from_nws(lat, lon)
       forecast
