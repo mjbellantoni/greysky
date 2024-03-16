@@ -10,6 +10,10 @@ class Query
     end
   end
 
+  def provided?
+    q.present?
+  end
+
   private
 
   def zip_code?
