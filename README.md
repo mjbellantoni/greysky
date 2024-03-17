@@ -109,7 +109,7 @@ The National Weather Service API doesn't require an API key.
 Here are some things I'd want to do if I continued to push this work
 forward.
 
-* More tests. Lot's more tests.
+* More tests. Lots more tests.
 * Use Memcached or Redis for caching.
 * Check for errors and rate limits from external services and retry or
   otherwise handle them gracefully.
