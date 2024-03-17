@@ -45,7 +45,7 @@ along [commit by
 commit](https://github.com/mjbellantoni/greysky/commits).
 
 I also spent some time upfront exploring available APIs. I used that
-info to firm up the app's requirements as I saw what was available.##
+info to firm up the app's requirements as I saw what was available.
 
 ## Developing
 
