@@ -117,3 +117,4 @@ forward.
   polling Stimulus controller or TurboStreams along with that.
 * Explore other opportunities for caching.
 * Add search box into the menu bar.
+* Make the app work without JavaScript.
