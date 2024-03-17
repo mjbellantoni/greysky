@@ -1,6 +1,6 @@
 <% if @query.provided? && flash.key?(:alert) %>
   <div class="alert alert-danger">
-    <span>The query <%= @query.errors.full_messages_for(:base).to_sentence %>.</span>
+    <span><%= flash[:alert] %></span>
   </div>
 <% end %>
 

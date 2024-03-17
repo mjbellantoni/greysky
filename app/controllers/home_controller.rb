@@ -8,5 +8,7 @@ class HomeController < ApplicationController
       flash[:alert] = "Please enter a valid ZIP code or city and state."
       render :index
     end
+  rescue Geocoder::FailedGeocode
+    flash[:alert] = "We couldn't find \"#{params[:q].squish}\". Please try again with a valid ZIP code or city and state."
   end
 end
