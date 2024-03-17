@@ -4,7 +4,9 @@ This is a simple web application that displays the current weather and
 seven-day forecast for a give ZIP code or City, State. It caches the
 results for a particular ZIP code for 30 minutes.
 
-You can try it [here on Heroku](https://greysky-21447b0393eb.herokuapp.com).
+You can try it [here on
+Heroku](https://greysky-21447b0393eb.herokuapp.com). You can either use
+the search box or type in a URL like [`/forecasts/90210`](https://greysky-21447b0393eb.herokuapp.com/forecasts/90210).
 
 ## Technical details
 
@@ -102,23 +104,16 @@ The National Weather Service API doesn't require an API key.
 
 ## TODO
 
-### Must do
-
-* Handle bad input more gracefully
-* Remove hard-coding in the home controller
-* Minimize calls to the Geocoder API if possible
-* Add search box to the Forecast page
-
 ### Future work
 
 Here are some things I'd want to do if I continued to push this work
 forward.
 
-* More tests.
-* When handed a ZIP code, check the cache before calling out to the Geocoder.
+* More tests. Lot's more tests.
 * Use Memcached or Redis for caching.
-* Use Turbo or Stimulus to load the page before the weather data is ready. 
-* Check for errors and rate limits from external services and retry.
-* Explore using a background worker for the NWS API calls.
+* Check for errors and rate limits from external services and retry or
+  otherwise handle them gracefully.
+* Explore using a background worker for the NWS API calls. We'd use a
+  polling Stimulus controller or TurboStreams along with that.
 * Explore other opportunities for caching.
 * Add search box into the menu bar.
