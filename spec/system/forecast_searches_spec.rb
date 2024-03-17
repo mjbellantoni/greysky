@@ -9,7 +9,8 @@ RSpec.describe "Forecast searches", type: :system do
   include NwsStubs
 
   before do
-    driven_by(:rack_test)
+    driven_by(:selenium_headless)
+    WebMock.disable_net_connect!(allow_localhost: true)
   end
 
   def input_field
@@ -48,6 +49,6 @@ RSpec.describe "Forecast searches", type: :system do
     expect(page).to have_text("L:37")
     expect(page).to have_text("Cloudy")
 
-    expect(page).to have_css("table#forecast_periods tr", count: 14)
+    expect(page).to have_css("table#forecast_periods tbody tr", count: 14)
   end
 end
