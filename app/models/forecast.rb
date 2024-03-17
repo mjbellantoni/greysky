@@ -113,4 +113,8 @@ class Forecast
   def to_key
     zip_code.present? ? [zip_code] : nil
   end
+
+  def to_param
+    zip_code
+  end
 end
