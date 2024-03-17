@@ -109,4 +109,8 @@ class Forecast
   def newly_fetched?
     fetched_at > 1.minute.ago
   end
+
+  def to_key
+    zip_code.present? ? [zip_code] : nil
+  end
 end
