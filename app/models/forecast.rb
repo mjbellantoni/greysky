@@ -107,7 +107,11 @@ class Forecast
   end
 
   def newly_fetched?
-    fetched_at > 1.minute.ago
+    (fetched_at > 1.minute.ago) if fetched?
+  end
+
+  def fetched?
+    fetched_at.present?
   end
 
   def to_key

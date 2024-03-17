@@ -127,6 +127,10 @@ RSpec.describe Forecast, type: :model do
   end
 
   describe "#newly_fetched?" do
+    it "returns nil if fetched_at is nil" do
+      forecast = Forecast.new(fetched_at: nil)
+      expect(forecast.newly_fetched?).to be_nil
+    end
     it "returns true if the forecast was fetched less than 1 minute ago" do
       freeze_time do
         forecast = Forecast.new(fetched_at: 59.seconds.ago)
