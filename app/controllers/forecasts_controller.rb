@@ -4,7 +4,7 @@ class ForecastsController < ApplicationController
     # Use Geocoder to geocode the ZIP code. The NWS API needs a lat/lng
     # pair to look up the forecast.
     result = Geocoder.geocode(query)
-    @forecast = Forecast.fetch(result.zip_code, result.lat, result.lng, result.city)
+    @forecast = Forecast.new(zip_code: result.zip_code, city: result.city)
   end
 
   def content
