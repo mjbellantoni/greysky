@@ -9,17 +9,19 @@
     </div>
   <% end %>
 </section>
-<section class="my-4">
-  <h5>7-day Forecast</h5>
-  <table id="forecast_periods" class="table table-borderless my-4">
-    <thead>
-    <th></th>
-    <th class="text-end">🌡️</th>
-    <th class="text-end">🌧️</th>
-    <th class="d-none d-md-block"></th>
-    </thead>
-    <tbody>
-    <%= render forecast.forecast_periods %>
-    </tbody>
-  </table>
-</section>
+<% if forecast.forecast_periods.present? %>
+  <section class="my-4">
+    <h5>7-day Forecast</h5>
+    <table id="forecast_periods" class="table table-borderless my-4">
+      <thead>
+      <th></th>
+      <th class="text-end">🌡️</th>
+      <th class="text-end">🌧️</th>
+      <th class="d-none d-md-block"></th>
+      </thead>
+      <tbody>
+      <%= render forecast.forecast_periods %>
+      </tbody>
+    </table>
+  </section>
+<% end %>
